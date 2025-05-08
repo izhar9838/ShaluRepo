@@ -1,6 +1,6 @@
 // File: Header.jsx
 // Description: This file contains the Header component for the Shalu Travels website.
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -23,11 +23,27 @@ const Logo = () => (
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef(null);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
+  // Handle clicks outside the mobile menu
+    useEffect(() => {
+      const handleClickOutside = (event) => {
+        if (menuRef.current && !menuRef.current.contains(event.target)) {
+          setIsOpen(false);
+        }
+      };
+  
+      if (isOpen) {
+        document.addEventListener('mousedown', handleClickOutside);
+      }
+  
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, [isOpen]);
   // Handle screen size changes
   useEffect(() => {
     const handleResize = () => {
@@ -103,6 +119,7 @@ const Header = () => {
       {isOpen && (
         <motion.div
           className="md:hidden bg-orange-100 shadow-md text-center w-full h-auto z-101 absolute left-0"
+          ref={menuRef}
           style={{ top: '40px' }}
           variants={menuVariants}
           initial="hidden"
