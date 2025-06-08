@@ -61,7 +61,19 @@ const Footer = () => {
       sectionRefs.current.push(el);
     }
   };
-
+  const platforms=[{
+    name: 'Facebook',
+    url: 'https://www.facebook.com/people/Alam-Geer/pfbid032r45NyeD3sdbhWZZax1iwLFSnqhQP2WUv4nj4qYbBumfZw4EwSamr7y4yoyZcXMDl/?rdid=6RyZCaGaACENaHDq&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1Bo4xiQDBd%2F'
+  }, {
+    name: 'Instagram',
+    url: 'https://www.instagram.com/alamgir_087/?igsh=YnJ4dGZnM25icWNy&utm_source=ig_contact_invite'
+  }, {
+    name: 'Twitter',
+    url: 'https://x.com/AalamgirAalam1?t=ag5F4z2vlSTk0bBn5WXpuQ&s=09'
+  }, {
+    name: 'YouTube',
+    url: 'https://www.youtube.com/@goweb3157'
+  }]
   return (
     <>
       {/* Inject CSS styles */}
@@ -140,7 +152,7 @@ const Footer = () => {
                 Contact Us
               </h3>
               <ul className="space-y-2 text-sm md:text-base lg:text-lg">
-                <li>Email: info@shalutravels.com</li>
+                <li>Email: shalutravel006@gmail.com</li>
                 <li>Phone: +91 9838803405</li>
                 <li>Address: Dhanauji Road Fazilnagar, Kushinagar 274401</li>
               </ul>
@@ -152,20 +164,20 @@ const Footer = () => {
                 Follow Us
               </h3>
               <ul className="space-y-2">
-                {['Facebook', 'Instagram', 'Twitter', 'YouTube'].map((platform) => (
-                  <li key={platform}>
+                {platforms.map((platform) => (
+                  <li key={platform.name}>
                     <Link
                       to="#"
                       onClick={() =>
                         window.open(
-                          `https://${platform.toLowerCase()}.com/shalutravels`,
+                          `${platform.url}`,
                           '_blank',
                           'noopener,noreferrer'
                         )
                       }
                       className="text-sm md:text-base lg:text-lg hover:text-orange-500 transition-colors"
                     >
-                      {platform}
+                      {platform.name}
                     </Link>
                   </li>
                 ))}

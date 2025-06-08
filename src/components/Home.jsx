@@ -3,52 +3,8 @@ import useBackgroundSlideshow from './useBackgroundSlideShow';
 
 const Home = () => {
   const sectionRef = useRef(null);
-  const [scrollDirection, setScrollDirection] = useState(null);
-  const lastScrollY = useRef(window.scrollY);
   const [hasAnimatedOnLoad, setHasAnimatedOnLoad] = useState(false);
   const { backgroundImages, currentImageIndex, prevImageIndex } = useBackgroundSlideshow();
-
-  // Detect scroll direction
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY.current) {
-        setScrollDirection('down');
-      } else {
-        setScrollDirection('up');
-      }
-      lastScrollY.current = currentScrollY;
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Intersection Observer for scroll animation
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && scrollDirection === 'up') {
-            entry.target.classList.add('animate-on-scroll-up');
-          } else if (!entry.isIntersecting && scrollDirection === 'down') {
-            entry.target.classList.remove('animate-on-scroll-up');
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, [scrollDirection]);
 
   // Intersection Observer for initial load animation
   useEffect(() => {
@@ -90,12 +46,17 @@ const Home = () => {
             }
           }
           .hero-section {
-            opacity: 0;
-            position: fixed;
-            top: 200px;
+
+            margin-top: 7rem;
             left: 0;
             right: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 10vh;
             z-index: 10;
+            opacity: 0;
           }
           .hero-section.animate-on-scroll-up {
             animation: appear 0.8s ease-in-out;
@@ -120,6 +81,10 @@ const Home = () => {
           }
           /* Responsive adjustments for mobile and tablet */
           @media (max-width: 768px) {
+            .hero-section {
+            margin-top: 10rem;
+              padding-top: 8vh;
+            }
             .hero-heading {
               font-size: 2.5rem;
             }
@@ -135,6 +100,9 @@ const Home = () => {
             }
           }
           @media (max-width: 640px) {
+            .hero-section {
+              padding-top: 5vh;
+            }
             .hero-heading {
               font-size: 2rem;
             }
@@ -144,7 +112,7 @@ const Home = () => {
           }
         `}
       </style>
-      <section className="min-h-[90vh] w-full relative overflow-hidden">
+      <section className="max-h-[93vh] w-full relative overflow-hidden">
         <div className="background-container">
           {prevImageIndex !== null && (
             <div
